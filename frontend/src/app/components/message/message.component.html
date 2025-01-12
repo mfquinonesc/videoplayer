@@ -1,0 +1,16 @@
+<div [ngClass]="message.isActive?'modal is-active':'modal'">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{message.title}}</p>
+            <button class="delete" aria-label="close" (click)="message.closeDialog()"></button>
+        </header>
+        <section class="modal-card-body">
+            <p>{{message.text}}</p>
+        </section>
+        <footer class="modal-card-foot">
+            <button *ngIf="message.showConfirm" class="button is-black mr-2" (click)="message.confirmDialog()">Aceptar</button>
+            <button *ngIf="message.showCancel" class="button is-warning" (click)="message.closeDialog()">Cancelar</button>
+        </footer>
+    </div>
+</div>

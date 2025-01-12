@@ -1,0 +1,31 @@
+<!-- Login Form -->
+<div class="tab-content">
+  <h3 class="title is-4 has-text-weight-semibold">Iniciar Sesión</h3>
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <div class="field">
+      <label for="email" class="label">Correo</label>
+      <div class="control">
+        <input id="email" formControlName="email" class="input" type="email" placeholder="Correo">
+      </div>
+      <div *ngIf="email.invalid && (email.touched || email.dirty)">
+        <small>Correo inválido</small>
+      </div>
+    </div>
+    <div class="field">
+      <label for="password" class="label">Contraseña</label>
+      <div class="control">
+        <input id="password" formControlName="password" class="input" type="password" placeholder="Contraseña">
+      </div>
+      <div *ngIf="password.invalid && (password.touched || password.dirty)">
+        <small>Contraseña inválida</small>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <button class="button is-black is-fullwidth" [ngClass]="{'is-loading':isLoading}" type="submit" [disabled]="loginForm.invalid || isLoading">Iniciar Sesión</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<app-message [message]="message"></app-message>

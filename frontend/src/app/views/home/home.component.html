@@ -1,0 +1,48 @@
+
+  <!-- Main Container -->
+  <div class="main-container">
+
+    <!-- Video Content -->
+    <div class="video-container hide-player">
+      <div class="video-header">
+        <h1>Video Título</h1>
+      </div>
+
+      <div class="video-content">
+        <!-- Left Side: Video Info and Description -->
+        <div class="video-info">
+          <img src="https://via.placeholder.com/300" alt="Video Thumbnail" class="image">
+          <div class="video-description">
+            <p>
+              Descripción del video: Este es un video de ejemplo que muestra cómo organizar contenido de forma clara y eficiente en una página web.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Side: Video Player -->
+        <div class="video-player">
+          <video controls width="100%">
+            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+          </video>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Optional buttons to hide content -->
+    <div class="buttons">
+      <button class="button is-info" id="toggle-info">Ocultar Información</button>
+      <button class="button is-info" id="toggle-player">Ocultar Reproductor</button>
+    </div>
+  </div>
+<!-- 
+  <script>
+    // JavaScript to toggle visibility
+    document.getElementById('toggle-info').addEventListener('click', function () {
+      document.querySelector('.video-container').classList.toggle('hide-info');
+    });
+
+    document.getElementById('toggle-player').addEventListener('click', function () {
+      document.querySelector('.video-container').classList.toggle('hide-player');
+    });
+  </script> -->

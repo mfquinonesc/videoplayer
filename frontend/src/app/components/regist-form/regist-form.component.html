@@ -1,0 +1,73 @@
+<div class="tab-content">
+  <h3 class="title is-4 has-text-weight-semibold">Crear Cuenta</h3>
+  <form [formGroup]="registForm" (ngSubmit)="submit()">
+    <div class="field">
+      <label class="label">Nombre</label>
+      <div class="control">
+        <input formControlName="name" class="input" type="text" placeholder="Nombre" required>
+      </div>
+    </div>
+    <div>
+      <small *ngIf="name.invalid && (name.touched || name.dirty)">Nombre inválido</small>
+    </div>
+    <div class="field">
+      <label class="label">Apellido</label>
+      <div class="control">
+        <input formControlName="lastname" class="input" type="text" placeholder="Apellido" required>
+      </div>
+    </div>
+    <div>
+      <small *ngIf="lastname.invalid && (lastname.touched || lastname.dirty)">Apellido inválido</small>
+    </div>
+    <div class="field">
+      <label class="label">Correo</label>
+      <div class="control">
+        <input formControlName="email" class="input" type="email" placeholder="Correo" required>
+      </div>
+    </div>
+    <div>
+      <small *ngIf="email.invalid && (email.touched || email.dirty)">Correo inválido</small>
+    </div>
+    <div class="field">
+      <label class="label">Contraseña</label>
+      <div class="control">
+        <input formControlName="password" class="input" type="password" placeholder="Contraseña" required>
+      </div>
+      <div>
+        <small *ngIf="password.invalid && (password.touched || password.dirty)">Contraseñas inválida</small>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Confirmar Contraseña</label>
+      <div class="control">
+        <input formControlName="confirmPassword" class="input" type="password" placeholder="Confirme su contraseña"
+          required>
+      </div>
+    </div>
+    <div>
+      <small *ngIf="(confirmPassword.value != password.value || confirmPassword.invalid) && (confirmPassword.touched || confirmPassword.dirty)">
+        Las contraseñas deben ser iguales
+      </small>
+    </div>
+
+    <!-- Admin selector (uncommented) -->
+    <div class="field">
+      <label class="label">¿Es usted administrador?</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select formControlName="isAdmin">
+            <option [value]="false">No</option>
+            <option [value]="true">Sí</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <button class="button is-black is-fullwidth" type="submit" [disabled]="registForm.invalid">Registrarse</button>
+      </div>
+    </div>
+  </form>
+</div>

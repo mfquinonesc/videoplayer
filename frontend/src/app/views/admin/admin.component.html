@@ -1,0 +1,201 @@
+  <!-- Header: Canal -->
+  <section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Canal de YouTube
+        </h1>
+        <h2 class="subtitle">
+          Videos de <strong>Nombre del Canal</strong>
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra de navegación -->
+  <nav class="navbar is-link">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+        <strong>Canal</strong> YouTube
+      </a>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <section class="section">
+    <div class="container">
+      <!-- Información del canal -->
+      <div class="channel-info">
+        <img src="https://via.placeholder.com/150" alt="Logo del canal" class="image is-48x48">
+        <div>
+          <h3 class="title is-4">Nombre del Canal</h3>
+          <p class="subtitle is-6">Descripción del canal</p>
+        </div>
+      </div>
+      
+      <hr>
+
+      <!-- Botón para insertar un nuevo video -->
+      <div class="field">
+        <div class="control">
+          <button class="button is-success" id="new-video-btn" data-target="video-modal">
+            Insertar Nuevo Video
+          </button>
+        </div>
+      </div>
+
+      <h3 class="title is-5">Videos recientes</h3>
+      <div class="columns is-multiline">
+        <!-- Video 1 -->
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image">
+                <img class="video-thumbnail" src="https://via.placeholder.com/300x180" alt="Video 1">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-6">Título del Video 1</p>
+              <p class="subtitle is-7">Descripción breve del video.</p>
+              <!-- Botones de acción -->
+              <div class="buttons">
+                <button class="button is-danger" onclick="deleteVideo(this)">
+                  Eliminar
+                </button>
+                <button class="button is-info" onclick="openScheduleModal(this)">
+                  Programar Horario
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image">
+                <img class="video-thumbnail" src="https://via.placeholder.com/300x180" alt="Video 2">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-6">Título del Video 2</p>
+              <p class="subtitle is-7">Descripción breve del video.</p>
+              <!-- Botones de acción -->
+              <div class="buttons">
+                <button class="button is-danger" onclick="deleteVideo(this)">
+                  Eliminar
+                </button>
+                <button class="button is-info" onclick="openScheduleModal(this)">
+                  Programar Horario
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image">
+                <img class="video-thumbnail" src="https://via.placeholder.com/300x180" alt="Video 3">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-6">Título del Video 3</p>
+              <p class="subtitle is-7">Descripción breve del video.</p>
+              <!-- Botones de acción -->
+              <div class="buttons">
+                <button class="button is-danger" onclick="deleteVideo(this)">
+                  Eliminar
+                </button>
+                <button class="button is-info" onclick="openScheduleModal(this)">
+                  Programar Horario
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal para insertar nuevo video -->
+  <div id="video-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Nuevo Video</p>
+        <button class="delete" id="close-modal-btn" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Título del Video</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Título del video">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Descripción</label>
+          <div class="control">
+            <textarea class="textarea" placeholder="Descripción del video"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Cargar Imagen</label>
+          <div class="control">
+            <input class="input" type="file" accept="image/*" id="video-image">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Cargar Video</label>
+          <div class="control">
+            <input class="input" type="file" accept="video/*" id="video-file">
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Insertar Video</button>
+        <button class="button" id="cancel-modal-btn">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Modal para programar el horario de reproducción -->
+  <div id="schedule-modal" class="modal ">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Programar Horario de Reproducción</p>
+        <button class="delete" id="close-schedule-modal-btn" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Fecha y Hora</label>
+          <div class="control">
+            <input class="input" type="datetime-local" id="schedule-time">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Modo de Reproducción</label>
+          <div class="control">
+            <div class="select">
+              <select id="reproduction-mode">
+                <option value="automatic">Automático</option>
+                <option value="manual">Manual</option>
+                <option value="scheduled">Programado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Guardar</button>
+        <button class="button" id="cancel-schedule-modal-btn">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+
+  

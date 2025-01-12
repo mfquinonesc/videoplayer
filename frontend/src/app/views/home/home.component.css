@@ -1,0 +1,88 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+
+  .video-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .video-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .video-header h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .video-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .video-info {
+    width: 30%; /* Left section - 1/3 of the width */
+  }
+
+  .video-description {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .video-player {
+    width: 65%; /* Right section - 2/3 of the width */
+  }
+
+  /* Responsive Layout */
+  @media (max-width: 768px) {
+    .video-content {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .video-info, .video-player {
+      width: 100%;
+    }
+
+    .video-player {
+      margin-top: 20px;
+    }
+  }
+
+  /* Optional: hide the left section and let video take full width */
+  .hide-info .video-info {
+    display: none;
+  }
+
+  .hide-info .video-player {
+    width: 100%;
+  }
+
+  /* Optional: hide the video and let info take full width */
+  .hide-player .video-player {
+    display: none;
+  }
+
+  .hide-player .video-info {
+    width: 100%;
+  }

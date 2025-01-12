@@ -1,0 +1,31 @@
+<!-- Main content container -->
+<section class="hero is-warning is-fullheight is-fullheight-with-navbar">
+  <div class="hero-body">
+
+    <div class="container">
+      <div class="columns is-vcentered is-centered">
+
+        <div class="column is-4">
+          <div class="tabs-container">
+            <!-- Tabs -->
+            <div class="tabs is-centered">
+              <ul>
+                <li [ngClass]="isLogin?'is-active':''">
+                  <a (click)="toggle()" class="has-text-weight-semibold">Login</a>
+                </li>
+                <li [ngClass]="isLogin?'':'is-active'">
+                  <a (click)="toggle()" class="has-text-weight-semibold">Registro</a>
+                </li>
+              </ul>
+            </div>
+
+            <app-login-form *ngIf="isLogin"></app-login-form>
+            
+            <app-regist-form *ngIf="!isLogin"></app-regist-form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

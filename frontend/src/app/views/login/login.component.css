@@ -1,0 +1,8 @@
+.tabs ul .is-active {
+    border-radius: 0 !important; 
+    background-color: black;    
+}
+
+.tabs ul .is-active a{
+    color: white;
+}
