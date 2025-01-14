@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Account } from 'src/app/models/account';
+import { AuthService } from 'src/app/services/auth.service';
 import { Message } from 'src/app/utilities/message';
 
 @Component({
@@ -8,6 +11,8 @@ import { Message } from 'src/app/utilities/message';
   styleUrls: ['./regist-form.component.css']
 })
 export class RegistFormComponent extends Message {
+
+  isLoading: boolean = false;
 
   registForm = this.fb.group({
     name: ['', Validators.required],
@@ -18,7 +23,9 @@ export class RegistFormComponent extends Message {
     isAdmin: [false]
   });
 
-  constructor(private fb: FormBuilder) {
+  @Output() registEvent =  new EventEmitter<boolean>(false);
+
+  constructor(private fb: FormBuilder, private authService:AuthService) {
     super();
   }
 
@@ -46,11 +53,29 @@ export class RegistFormComponent extends Message {
     return this.registForm.controls.isAdmin;
   }
 
+  accept(){
+    this.registEvent.emit(true);
+  }
+
   submit() {
     if (this.registForm.valid) {
+      this.isLoading = true; 
+      const account = this.registForm.value as Account;
+      this.authService.create(account).subscribe({
+        next:(value) =>{
+          if(value.status){
+            this.showMessage("Se ha creado su cuenta exitosamente. Ingrese con su correo y contraseña.","Mensaje");
+          }else{
+            this.showMessage("Este correo ya está registrado","Error");
+          }
+        },
+        complete:() =>{
+          this.isLoading = false;
+        },
+      });
 
     } else {
-      this.openDialog('','Mensaje')
+      this.showAction('Se produjo un error', 'Mensaje');
     }
   }
 }

@@ -4,12 +4,16 @@ import { HomeComponent } from './views/home/home.component';
 import { ListComponent } from './views/list/list.component';
 import { AdminComponent } from './views/admin/admin.component';
 import { LoginComponent } from './views/login/login.component';
+import { adminGuard } from './admin.guard';
+import { ErrorComponent } from './views/error/error.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'admin', component: AdminComponent},
-  { path: 'list', component: ListComponent },
-  { path: 'login', component:LoginComponent}
+  { path: 'admin', component: AdminComponent, canActivate: [adminGuard] },
+  { path: 'list', component: ListComponent, canActivate: [adminGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'forbidden', component: ErrorComponent },
+  { path: '**', pathMatch: 'full', component: ErrorComponent },
 ];
 
 @NgModule({

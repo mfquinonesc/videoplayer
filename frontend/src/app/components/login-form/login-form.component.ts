@@ -34,7 +34,7 @@ export class LoginFormComponent extends Message {
   submit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      let info = this.loginForm.value as Account;
+      const info = this.loginForm.value as Account;
       this.authService.login(info).subscribe({
         next:(value)=>{
           if(value.status){
@@ -50,7 +50,7 @@ export class LoginFormComponent extends Message {
       });
     }
     else {
-      this.openDialog('Se produjo un error', 'Mensaje');
+      this.showAction('Se produjo un error', 'Mensaje');
     }
   }
 }

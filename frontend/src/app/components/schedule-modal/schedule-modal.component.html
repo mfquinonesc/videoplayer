@@ -1,0 +1,95 @@
+<form id="schedule-modal" [formGroup]="scheduleForm" [ngClass]="isActive?'modal is-active':'modal'"
+    (ngSubmit)="submit()">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{ isAdding?'Crear lista de reproducción':'Programar Horario de Reproducción'}}
+            </p>
+            <button class="delete" id="close-schedule-modal-btn" aria-label="close" (click)="cancel()"></button>
+        </header>
+        <section class="modal-card-body">
+
+            <!-- Campo de Nombre -->
+            <div *ngIf="isAdding" class="field">
+                <label class="label" for="name">Nombre</label>
+                <div class="control">
+                    <input formControlName="name" class="input" type="text" placeholder="Nombre" id="name">
+                </div>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <small>Debe ingresar un nombre</small>
+                </div>
+            </div>
+
+            <!-- Campo de Descripción -->
+            <div *ngIf="isAdding" class="field" id="text-area-field">
+                <label for="extra-text" class="label">Descripción</label>
+                <div class="control">
+                    <textarea formControlName="description" class="textarea" id="extra-text"
+                        placeholder="Agrega la descripción aquí..."></textarea>
+                </div>
+                <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                    <small >Debe ingresar una descripción</small>
+                </div> -->
+            </div>
+
+            <!-- Campo de Fecha y Hora -->
+            <div *ngIf="!isAdding" class="field">
+                <label for="startDate" class="label">Fecha y Hora</label>
+                <div class="control">
+                    <input formControlName="startDate" class="input" type="datetime-local" id="startDate">
+                </div>
+                <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
+                    <small>Debe seleccionar una fecha y hora</small>
+                </div>
+            </div>
+
+            <div *ngIf="!isAdding" class="field">
+                <label class="label" for="duration">Número de minutos</label>
+                <div class="control">
+                    <input formControlName="duration" class="input" type="number" placeholder="Número de minutos"
+                        id="duration" min="0" [readOnly]="content.contentTypeId == 1 || content.contentTypeId == 2" />
+                </div>
+                <div *ngIf="duration.invalid && (duration.dirty || duration.touched)">
+                    <small>Debe ingresar un número válido (minutos)</small>
+                </div>
+            </div>
+
+
+            <!-- Campo de Selección de Lista -->
+            <div *ngIf="!isAdding" class="field">
+                <label for="playlistId" class="label">Seleccionar Lista</label>
+                <div class="control is-flex is-align-items-center">
+                    <div class="select">
+                        <select formControlName="playlistId" id="playlistId">
+                            <option *ngFor="let list of playlists" [value]="list.playlistId">{{list.name}}</option>
+                        </select>
+                    </div>
+                    <button type="button" class="button is-warning ml-3" (click)="toggle()">Agregar</button>
+                </div>
+                <div *ngIf="playlistId.invalid && (playlistId.dirty || playlistId.touched)">
+                    <small>Debe seleccionar una lista</small>
+                </div>
+            </div>
+
+            <!-- Lista de Horarios Programados -->
+            <div *ngIf="!isAdding && scheduledTimes.length > 0">
+                <h3 class="subtitle">Horarios Programados</h3>
+                <ul>
+                    <li *ngFor="let schedule of scheduledTimes">
+                        <span class="delete mr-2" (click)="delete(schedule.scheduleId)"></span>
+                        <span> {{ schedule.date | date:'yyyy-MM-dd HH:mm:ss' }} - {{ schedule.listName +' - ('+ schedule.duration+')' }}</span>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="!isAdding && scheduledTimes.length == 0">
+                <p>No hay contenido programado...</p>
+            </div>
+
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-black mr-2" [ngClass]="{isLoading:'is-loading'}" type="submit"
+                [disabled]="isAdding?listInvalid:dateInvalid">Guardar</button>
+            <button class="button is-warning" type="button" (click)="cancel()">Cancelar</button>
+        </footer>
+    </div>
+</form>

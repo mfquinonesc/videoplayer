@@ -1,0 +1,75 @@
+
+<form [formGroup]="contentForm" [ngClass]="isActive?'modal is-active':'modal'" (ngSubmit)="submit()">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{isUpdating?'Editar':'Nuevo'}} Contenido</p>
+            <button class="delete" id="close-modal-btn" aria-label="close" (click)="cancel()"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field">
+                <label class="label">Título</label>
+                <div class="control">
+                    <input formControlName="title" class="input" type="text" placeholder="Título">
+                </div>
+                <div *ngIf="title.invalid && (title.dirty || title.touched)">
+                    <small>Debe ingresar un título</small>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Descripción</label>
+                <div class="control">
+                    <textarea formControlName="description" class="textarea" placeholder="Descripción"></textarea>
+                </div>
+                <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                    <small>Debe ingresar una descripción</small>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Tipos de presentación</label>
+                <div class="control">
+                    <div class="select">
+                        <select formControlName="contentTypeId" (change)="resetFiles()">
+                            <option *ngFor="let ct of cTypes" [ngValue]="ct.contentTypeId">{{ct.name}}</option>                           
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="contentTypeId.value == 3 || contentTypeId.value == 2" class="field has-addons">
+                <p class="control">
+                    <label for="imageFile" class="button is-warning">
+                        <span class="icon"><i class="fa-solid fa-image"></i></span>
+                        <span>Imagen</span>
+                    </label>                    
+                </p>
+                <p class="control is-expanded">
+                    <input formControlName="image" class="input" type="text" placeholder="Imagen" readonly>
+                    <input id="imageFile" class="input" type="file" accept="image/*" style="display: none;" (change)="loadContent($event)">
+                    <span *ngIf="imageInvalid && (image.dirty || image.touched)">
+                        <small>Debe cargar una imagen</small>
+                    </span>
+                </p>                
+            </div>          
+            
+            <div *ngIf="contentTypeId.value == 1 || contentTypeId.value == 2" class="field has-addons">
+                <p class="control">
+                    <label for="videoFile" class="button is-warning">
+                        <span class="icon"><i class="fa-solid fa-film"></i></span>
+                        <span>Video</span>
+                    </label>
+                </p>
+                <p class="control is-expanded">
+                    <input formControlName="video" class="input" type="text" placeholder="Video" readonly>
+                    <input id="videoFile" class="input" type="file" accept="video/*" style="display: none;" (change)="loadContent($event)">
+                    <span *ngIf="videoInvalid && (video.dirty || video.touched)">
+                        <small>Debe cargar un video</small>
+                    </span>
+                </p>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-black mr-2" type="submit" [ngClass]="{'is-loading':isLoading}" [disabled]="contentForm.invalid || videoInvalid || imageInvalid || isLoading">Guardar</button>
+            <button class="button is-warning" type="button" (click)="cancel()" [disabled]="isLoading">Cancelar</button>
+        </footer>
+    </div>
+</form>

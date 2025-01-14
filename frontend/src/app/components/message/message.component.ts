@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Message } from 'src/app/utilities/message';
 
 @Component({
@@ -8,5 +8,18 @@ import { Message } from 'src/app/utilities/message';
 })
 export class MessageComponent {
   
+  @Output() acceptEvent =  new EventEmitter<boolean>(false);
+  @Output() cancelEvent = new EventEmitter<boolean>(false);
+
   @Input()  message: Message | any;
+
+  accept(){
+    this.message.confirmDialog()
+    this.acceptEvent.emit(true);
+  }
+
+  cancel(){
+    this.message.closeDialog()
+    this.cancelEvent.emit(true);
+  }
 }

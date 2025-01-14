@@ -21,7 +21,7 @@
 
             <app-login-form *ngIf="isLogin"></app-login-form>
             
-            <app-regist-form *ngIf="!isLogin"></app-regist-form>
+            <app-regist-form *ngIf="!isLogin" (registEvent)="toggle()"></app-regist-form>
 
           </div>
         </div>

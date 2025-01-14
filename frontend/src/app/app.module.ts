@@ -13,6 +13,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RegistFormComponent } from './components/regist-form/regist-form.component';
 import { MessageComponent } from './components/message/message.component';
+import { ContentModalComponent } from './components/content-modal/content-modal.component';
+import { ContentCardComponent } from './components/content-card/content-card.component';
+import { ScheduleModalComponent } from './components/schedule-modal/schedule-modal.component';
+import { AuthInterceptor } from './middleware/auth.interceptor';
+import { ErrorComponent } from './views/error/error.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,12 @@ import { MessageComponent } from './components/message/message.component';
     LoginComponent,
     LoginFormComponent,
     RegistFormComponent,
-    MessageComponent
+    MessageComponent,
+    ContentModalComponent,
+    ContentCardComponent,
+    ScheduleModalComponent,
+    ErrorComponent,
+    ProfileComponent,   
   ],
   imports: [
     BrowserModule,
@@ -34,7 +45,7 @@ import { MessageComponent } from './components/message/message.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
