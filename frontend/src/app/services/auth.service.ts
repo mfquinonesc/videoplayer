@@ -13,7 +13,7 @@ export class AuthService {
   path: string = `${environment.API_PATH}/account`;
   TOKEN_NAME: string = environment.TOKEN_NAME;
 
-  constructor(private http: HttpClient,private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(account: Account): Observable<any> {
     return this.http.post(`${this.path}/login`, account);
@@ -36,7 +36,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.TOKEN_NAME);    
+    localStorage.removeItem(this.TOKEN_NAME);
+    localStorage.removeItem('user');
   }
 
   isLoggedIn(): boolean {
@@ -52,7 +53,7 @@ export class AuthService {
       this.verify().subscribe({
         next: (value) => {
           subs.next(value.status);
-          if(!value.status){
+          if (!value.status) {
             this.router.navigate(['/login']);
           }
         },
@@ -61,5 +62,13 @@ export class AuthService {
     return observable;
   }
 
+  saveLogin(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getLogin(): any {
+    let user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : {};
+  }
 }
 

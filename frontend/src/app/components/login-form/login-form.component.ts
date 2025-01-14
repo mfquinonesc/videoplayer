@@ -39,6 +39,7 @@ export class LoginFormComponent extends Message {
         next:(value)=>{
           if(value.status){
             this.authService.saveToken(value.token);
+            this.authService.saveLogin(value);
             this.router.navigateByUrl('/admin');
           }else{
             this.showMessage('El correo o la contraseña son incorrectos','Error');

@@ -24,6 +24,10 @@ builder.Services.AddSqlServer<DBVideoplayerContext>(builder.Configuration.GetCon
 
 // Service layer
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<ContentService>();
+builder.Services.AddScoped<ContentTypeService>();
+builder.Services.AddScoped<ScheduleService>();
+builder.Services.AddScoped<PlaylistService>();
 
 
 // Add cors 
@@ -34,12 +38,13 @@ builder.Services.AddCors(options => {
     });
 });
 
-builder.Services.AddSingleton<backend.Utilities.AuthSecurity>();
+builder.Services.AddSingleton<AuthSecurity>();
 
-builder.Services.AddAuthentication(Config => {
-    Config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    Config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(config => {
+builder.Services.AddAuthentication(config => {
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(config =>
+{
     config.RequireHttpsMetadata = false;
     config.SaveToken = true;
     config.TokenValidationParameters = new TokenValidationParameters
@@ -49,10 +54,10 @@ builder.Services.AddAuthentication(Config => {
         ValidateAudience = false,
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        IssuerSigningKey = new SymmetricSecurityKey
+        (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
-
 
 var app = builder.Build();
 
@@ -65,7 +70,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("MyAllowSpecificOrigins");
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -22,4 +22,9 @@ export class HeaderComponent {
   }
  }
 
+ get isAdmin ():boolean{
+      let login = this.authService.getLogin();
+      return (login && login.isAdmin)
+ }
+
 }

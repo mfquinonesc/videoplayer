@@ -20,30 +20,25 @@ namespace backend.Data
         public virtual DbSet<Account> Accounts { get; set; } = null!;
         public virtual DbSet<Content> Contents { get; set; } = null!;
         public virtual DbSet<ContentType> ContentTypes { get; set; } = null!;
+        public virtual DbSet<Playlist> Playlists { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
-
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Server=localhost;Database=DBVideoplayer;Trusted_Connection=True;");
-//            }
-//        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__Account__CB9A1CFF5677CDBE");
+                    .HasName("PK__Account__CB9A1CFF296D0207");
 
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Email, "UQ__Account__AB6E6164FE47797B")
+                entity.HasIndex(e => e.Email, "UQ__Account__AB6E6164AB8F607B")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
@@ -63,7 +58,7 @@ namespace backend.Data
                     .HasColumnName("name");
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(20)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("password");
             });
@@ -102,12 +97,6 @@ namespace backend.Data
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("videoUrl");
-
-                entity.HasOne(d => d.ContentType)
-                    .WithMany(p => p.Contents)
-                    .HasForeignKey(d => d.ContentTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_contentType_Content");
             });
 
             modelBuilder.Entity<ContentType>(entity =>
@@ -117,11 +106,35 @@ namespace backend.Data
                 entity.Property(e => e.ContentTypeId).HasColumnName("contentTypeId");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(200)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("description");
 
-                entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Playlist>(entity =>
+            {
+                entity.ToTable("Playlist");
+
+                entity.Property(e => e.PlaylistId).HasColumnName("playlistId");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<Schedule>(entity =>
@@ -137,7 +150,11 @@ namespace backend.Data
                     .HasColumnName("createdAt")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.Duration).HasColumnName("duration");
+
                 entity.Property(e => e.IsActive).HasColumnName("isActive");
+
+                entity.Property(e => e.PlaylistId).HasColumnName("playlistId");
 
                 entity.Property(e => e.StartDate)
                     .HasColumnType("datetime")

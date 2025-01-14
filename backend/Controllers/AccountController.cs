@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 
 namespace backend.Controllers
-{
+{    
     [Route("api/account")]
     [AllowAnonymous]
     [ApiController]
@@ -35,13 +35,18 @@ namespace backend.Controllers
             return _service.Create(account);
         }
 
-
         [HttpPut]
         [Route("update")]
         public dynamic Update(Account account) 
         {
             return this._service.Update(account);
         }
-        
+
+        [HttpGet]
+        [Route("verify")]
+        public dynamic Verify([FromHeader(Name = "Authorization")] string authHeader)
+        {
+            return this._service.Verify(authHeader);
+        }
     }
 }

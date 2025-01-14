@@ -2,6 +2,7 @@
 using backend.Dtos;
 using backend.Models;
 using backend.Utilities;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace backend.Services
@@ -9,6 +10,7 @@ namespace backend.Services
     public class AccountService : Service
     {
         private readonly AuthSecurity _auth;
+
         public AccountService(DBVideoplayerContext context,AuthSecurity auth) : base(context) 
         {
             this._auth = auth;
@@ -19,8 +21,7 @@ namespace backend.Services
             var faccount = this._context.Accounts.Where(a => a.Email == account.Email).FirstOrDefault();
 
             if(faccount == null)
-            {
-                account.UserId = 0;
+            {                
                 account.Password = this._auth.EncriptSHA256(account.Password);
                 this._context.Accounts.Add(account);
                 this._context.SaveChanges();
@@ -49,10 +50,32 @@ namespace backend.Services
             var account = this._context.Accounts.Where(a => a.Email == dto.Email && a.Password == this._auth.EncriptSHA256(dto.Password)).FirstOrDefault();
             var res = new {
                 status = account != null,
-                token = account != null ? this._auth.GenerateJwt(account) : ""
+                token = account != null ? this._auth.GenerateJwt(account) : "", 
+                name = account != null ? account.Name : "",  
+                isAdmin = account.IsAdmin                           
             };
             return res;
         }
-           
+       
+        public dynamic Verify(string authorizationHeader)
+        {
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return new { message = "Token nulo", status = false };
+            }
+
+            var token = authorizationHeader.Replace("Bearer ", string.Empty); 
+
+            try
+            {
+                var principal = _auth.VerifyToken(token); 
+                return new { message = "Token válido", status = true };
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return new { message = "Token inválido", status = false };
+            }
+        }
+
     }
 }

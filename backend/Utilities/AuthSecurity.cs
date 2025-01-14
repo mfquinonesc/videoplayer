@@ -45,10 +45,54 @@ namespace backend.Utilities
 
             var jwtConfig = new JwtSecurityToken(
                 claims: userClaims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddHours(24),
                 signingCredentials:credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
         }
+
+        public ClaimsPrincipal VerifyToken(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new ArgumentException("Token is null or empty");
+            }
+
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]); 
+
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false, // Assuming you do not validate the issuer here, you can change this if necessary
+                    ValidateAudience = false, // Same for audience validation
+                    ValidateLifetime = true, // Check if the token is expired
+                    IssuerSigningKey = new SymmetricSecurityKey(key) // Secret key to validate the token
+                };
+
+                // Validate the token and get the claims principal
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
+
+                // If the token is valid, return the claims principal
+                return principal;
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                // Handle expired token
+                throw new UnauthorizedAccessException("Token is expired.");
+            }
+            catch (SecurityTokenException)
+            {
+                // Handle invalid token
+                throw new UnauthorizedAccessException("Token is invalid.");
+            }
+            catch (Exception)
+            {
+                // Handle any other exceptions
+                throw new UnauthorizedAccessException("Token verification failed.");
+            }
+        }
+
     }
 }

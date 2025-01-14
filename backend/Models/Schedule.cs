@@ -7,8 +7,10 @@ namespace backend.Models
     {
         public int ScheduleId { get; set; }
         public int ContentId { get; set; }
+        public int PlaylistId { get; set; }
         public DateTime StartDate { get; set; }
         public bool IsActive { get; set; }
+        public int? Duration { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

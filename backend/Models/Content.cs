@@ -13,7 +13,5 @@ namespace backend.Models
         public int? Duration { get; set; }
         public int ContentTypeId { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        public virtual ContentType ContentType { get; set; } = null!;
     }
 }

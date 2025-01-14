@@ -8,7 +8,7 @@ import { adminGuard } from './admin.guard';
 import { ErrorComponent } from './views/error/error.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [adminGuard] },
   { path: 'list', component: ListComponent, canActivate: [adminGuard] },
   { path: 'login', component: LoginComponent },

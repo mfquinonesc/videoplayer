@@ -1,9 +1,9 @@
 <nav class="navbar is-warning is-fixed-top">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item">
+            <!-- <a class="navbar-item">
                 <i class="fa-solid fa-house" routerLink="/"></i>
-            </a>
+            </a> -->
             <span id="burger" class="navbar-burger burger" data-target="navbarMenu">
                 <span></span>
                 <span></span>
@@ -12,11 +12,24 @@
         </div>
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-end">
+                <a *ngIf="isAdmin" class="navbar-item is-size-5 has-text-weight-semibold" routerLink="/admin">
+                    <span  class="icon">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </span>
+                    <span class="is-size-6"> Admin </span>
+                </a>
+                <a class="navbar-item is-size-5 has-text-weight-semibold" routerLink="/list">
+                    <span class="icon">
+                        <i class="fa-solid fa-house"></i>
+                    </span>
+                    <span class="is-size-6"> Home </span>
+                </a>
                 <a class="navbar-item is-size-5 has-text-weight-semibold" (click)="login()">
                     <span class="icon">
                         <i class="fa-solid fa-right-to-bracket"></i>
-                    </span>                    
-                </a>                
+                    </span>
+                    <span class="is-size-6"></span>
+                </a>
             </div>
         </div>
     </div>

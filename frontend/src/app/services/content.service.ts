@@ -36,4 +36,8 @@ export class ContentService {
   update(id: number, content: Content): Observable<any> {
     return this.http.put(`${this.path}/${id}`, content.formData);
   }
+
+  getPlaylist(id: number): Observable<any> {
+    return this.http.get(`${environment.API_PATH}/media/list/${id}`);
+  }
 }
