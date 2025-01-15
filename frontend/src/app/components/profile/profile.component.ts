@@ -8,12 +8,14 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfileComponent {
 
-  login:any = {};
-  
-  constructor(private authService:AuthService){  
+  login: any = {};
+
+  constructor(private authService: AuthService) {
     this.login = this.authService.getLogin();
-    this.login.name = this.login.name.toUpperCase();
-    this.login.email = this.login.email.toLowerCase();
+    if (this.login != null) {
+      this.login.name = this.login.name ? this.login.name.toUpperCase() : '';
+      this.login.email = this.login.email ? this.login.email.toLowerCase() : '';
+    }
   }
 
 }

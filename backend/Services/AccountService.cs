@@ -52,7 +52,8 @@ namespace backend.Services
                 status = account != null,
                 token = account != null ? this._auth.GenerateJwt(account) : "", 
                 name = account != null ? account.Name : "",  
-                isAdmin = account.IsAdmin                           
+                isAdmin = account.IsAdmin,
+                email = account.Email                         
             };
             return res;
         }
