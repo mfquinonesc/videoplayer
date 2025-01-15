@@ -44,7 +44,7 @@
                 </p>
                 <p class="control is-expanded">
                     <input formControlName="image" class="input" type="text" placeholder="Imagen" readonly>
-                    <input id="imageFile" class="input" type="file" accept="image/*" style="display: none;" (change)="loadContent($event)">
+                    <input id="imageFile" class="input" type="file" accept="image/*" style="display: none;" (change)="loadFile($event)" [disabled]="isLoading">
                     <span *ngIf="imageInvalid && (image.dirty || image.touched)">
                         <small>Debe cargar una imagen</small>
                     </span>
@@ -60,7 +60,7 @@
                 </p>
                 <p class="control is-expanded">
                     <input formControlName="video" class="input" type="text" placeholder="Video" readonly>
-                    <input id="videoFile" class="input" type="file" accept="video/*" style="display: none;" (change)="loadContent($event)">
+                    <input id="videoFile" class="input" type="file" accept="video/*" style="display: none;" (change)="loadFile($event)" [disabled]="isLoading">
                     <span *ngIf="videoInvalid && (video.dirty || video.touched)">
                         <small>Debe cargar un video</small>
                     </span>

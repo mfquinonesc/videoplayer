@@ -5,6 +5,7 @@ import { Playlist } from 'src/app/models/playlist';
 import { Schedule } from 'src/app/models/schedule';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
+import { Message } from 'src/app/utilities/message';
 
 @Component({
   selector: 'app-schedule-modal',
@@ -26,12 +27,14 @@ export class ScheduleModalComponent implements OnInit {
   isAdding: boolean = false;
   isLoading: boolean = false;
 
+  message: Message = new Message();
+
   scheduleForm = this.fb.group({
     name: ['', [Validators.required]],
     description: ['', []],
-    startDate: ['', [Validators.required]],
+    startDate: [null, [Validators.required]],
     playlistId: [1, [Validators.required]],
-    duration: [0, [Validators.min(0), Validators.required]]
+    duration: [1, [Validators.min(1), Validators.required]]
   });
 
   constructor(private fb: FormBuilder,
@@ -47,20 +50,24 @@ export class ScheduleModalComponent implements OnInit {
   }
 
   initialize() {
+    this.scheduleForm.patchValue({
+      startDate: null,
+      duration: 1
+    });
     this.scheduleService.getAll().subscribe({
       next: (value) => {
         this.schedules = value.status ? value.schedules as Schedule[] : [];
         this.schedules = this.schedules.filter(s => { return s.contentId == this.content.contentId });
         this.scheduledTimes = [];
-        
-        this.schedules.forEach(s => {         
+
+        this.schedules.forEach(s => {
           let obj = {
             listName: this.playlists.find((p) => { return p.playlistId == s.playlistId })?.name,
             date: s.startDate,
             status: s.isActive,
             scheduleId: s.scheduleId,
             duration: s.duration
-          };     
+          };
           this.scheduledTimes.push(obj);
         });
       },
@@ -98,23 +105,22 @@ export class ScheduleModalComponent implements OnInit {
   createSchedule() {
     if (!this.dateInvalid) {
       this.isLoading = true;
-
-      console.log(this.playlistId.value);
-
-      let schedule = {
+      const date = new Date(this.startDate.value!);    
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      const schedule = {
         contentId: this.content.contentId,
         playlistId: this.playlistId.value,
-        startDate: new Date(this.startDate.value!),
-        duration: this.duration.value!,
+        startDate: date,
+        duration: this.duration.value || 1,
       } as unknown as Schedule;
-
-      console.log('save', schedule);
 
       this.scheduleService.create(schedule).subscribe({
         next: (value) => {
-          console.log(value);
-
-          //this.initialize();
+          if(value.status){
+            this.initialize();
+          }else{
+            this.message.showMessage('No se pudo realizar la programación','Alert')
+          }
         },
         complete: () => {
           this.isLoading = false;
@@ -132,7 +138,7 @@ export class ScheduleModalComponent implements OnInit {
           if (value.status) {
             this.isAdding = false;
           } else {
-            alert('Nombre repetido');
+            this.message.showMessage('Ya existe una lista con ese nombre', 'Alerta')
           }
         },
         complete: () => {

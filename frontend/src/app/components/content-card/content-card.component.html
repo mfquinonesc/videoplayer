@@ -3,7 +3,7 @@
     <figure class="image">
       <img *ngIf="content.imageUrl && !content.videoUrl" alt="Image" [src]="content.imageUrl">
 
-      <video *ngIf="content.videoUrl" controls autoplay loop muted >
+      <video *ngIf="content.videoUrl" controls loop muted >
         <source [src]="content.videoUrl">        
         Your browser does not support the video tag.
       </video>
@@ -27,6 +27,6 @@
   </div>
 </div>
 
-<app-content-modal [isUpdating]="true" [updateContent]="content" [isActive]="isEditing" (closeEvent)="toggle()" (saveEvent)="update()"></app-content-modal>
+<app-content-modal [isUpdating]="true" [uContent]="content" [isActive]="isEditing" (closeEvent)="toggle()" (saveEvent)="update()"></app-content-modal>
 
 <app-schedule-modal [playlists]="playlists" [content]="content" [isActive]="isDating" (cancelEvent)="toggleSchedule()" (saveEvent)="update()"></app-schedule-modal>

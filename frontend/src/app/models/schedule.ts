@@ -5,7 +5,7 @@ export interface Schedule {
     startDate: Date;
     isActive: boolean;
     createdAt: Date;
-    duration: Date;
+    duration: number;
     contentTypeId: number;
     description: string;
     finalDate: string;

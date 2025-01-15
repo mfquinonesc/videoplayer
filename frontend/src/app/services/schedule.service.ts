@@ -23,9 +23,7 @@ export class ScheduleService {
     this._schedules.next(value);
   }
 
-  create(schedule: Schedule): Observable<any> {
-    console.log(schedule);
-    
+  create(schedule: Schedule): Observable<any> { 
     return this.http.post(this.path, schedule);
   }
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Content } from 'src/app/models/content';
 import { Playlist } from 'src/app/models/playlist';
 import { ContentService } from 'src/app/services/content.service';
+import { Message } from 'src/app/utilities/message';
 
 @Component({
   selector: 'app-content-card',
@@ -20,6 +21,8 @@ export class ContentCardComponent {
   isLoading: boolean = false;
   isEditing: boolean = false;
   isDating: boolean = false;
+
+  message: Message = new Message();
 
   constructor(private contentService: ContentService) { }
 
