@@ -1,37 +1,17 @@
+<section class="hero is-light is-fullheight is-fullheight-with-navbar">
+  <div class="hero-body is-flex is-flex-direction-column is-justify-content-flex-start">
+    <div class="container mt-4">
 
-  <!-- Main Container -->
-  <div class="main-container">
+      <app-profile [isPlayer]="true" [isSearch]="false" [isAdding]="false"></app-profile>
 
-    <!-- Video Content -->
-    <div class="video-container hide-player">
-      <div class="video-header">
-        <h1>Video Título</h1>
-      </div>
-
-      <div class="video-content">
-        <!-- Left Side: Video Info and Description -->
-        <div class="video-info">
-          <img src="https://via.placeholder.com/300" alt="Video Thumbnail" class="image">
-          <div class="video-description">
-            <p>
-              Descripción del video: Este es un video de ejemplo que muestra cómo organizar contenido de forma clara y eficiente en una página web.
-            </p>
-          </div>
+      <article class="panel is-warning" style="height: 70vh;">
+        <p class="panel-heading">Título del video</p>
+        <div class="panel-block is-flex is-flex-diraction-row justifycontent-espace-between">
+          <div>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores dolorum reprehenderit voluptatibus tempora at. Ab consequuntur ratione similique, nam ipsum quod. Similique omnis explicabo laudantium inventore voluptatibus laborum nam in.</div>
+          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam facere quae, nihil, perferendis consectetur dolor voluptates, impedit molestias quo neque mollitia culpa sit vel ad dolores explicabo reiciendis minima rem!</div>
         </div>
+      </article>
 
-        <!-- Right Side: Video Player -->
-        <div class="video-player">
-          <video controls width="100%">
-            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-          </video>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Optional buttons to hide content -->
-    <div class="buttons">
-      <button class="button is-info" id="toggle-info">Ocultar Información</button>
-      <button class="button is-info" id="toggle-player">Ocultar Reproductor</button>
     </div>
   </div>
+</section>

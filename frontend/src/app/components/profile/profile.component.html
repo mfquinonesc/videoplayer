@@ -1,13 +1,23 @@
 <div class="is-flex is-flex-direction-row is-justify-content-space-between mb-4">
     <div class="is-flex is-flex-direction-ro">
-        <div class="field mr-2">
+
+        <div *ngIf="isPlayer" class="field mr-2">
+            <p class="control">
+                <button class="button is-warning" type="button">
+                    <span class="icon"><i class="fa-solid fa-play"></i></span>
+                </button>
+            </p>
+        </div>
+
+        <div *ngIf="isAdding" class="field mr-2">
             <p class="control">
                 <button class="button is-warning" type="button" (click)="add()">
                     <span class="icon"><i class="fa-solid fa-plus"></i></span>
                 </button>
             </p>
         </div>
-        <div class="field has-addons">
+        
+        <div *ngIf="isSearch" class="field has-addons">
             <p class="control is-expanded">
                 <input class="input" type="text" placeholder="Buscar" [(ngModel)]="searchText" (keydown.enter)="search()">
             </p>

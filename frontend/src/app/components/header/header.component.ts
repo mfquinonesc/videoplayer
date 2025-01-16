@@ -9,22 +9,23 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent {
 
- constructor(private authService:AuthService, private router: Router){
- }
-
-
- login(){
-  if(this.authService.isLoggedIn()){
-    this.authService.logout();
-    this.router.navigate(['/']);
-  }else{
-    this.router.navigate(['/login']);
+  constructor(private authService: AuthService, private router: Router) {
   }
- }
 
- get isAdmin ():boolean{
-      let login = this.authService.getLogin();
-      return (login && login.isAdmin)
- }
 
+  login() {
+    if (this.authService.isLoggedIn()) {
+      this.authService.logout();      
+    } 
+    this.router.navigate(['']);
+  }
+
+  get isAdmin() {
+    let info = this.authService.getLogin();
+    return info ? info.isAdmin as boolean : false;
+  }
+
+  get isLoggedIn(){
+    return this.authService.isLoggedIn();
+  }
 }

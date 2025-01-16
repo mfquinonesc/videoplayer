@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,12 +7,17 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+  
+  @Input() isSearch:boolean = true; 
+  @Input() isPlayer:boolean = false; 
+  @Input() isAdding:boolean = true; 
 
   @Output() clickEvent = new EventEmitter<boolean>(false);
   @Output() searchEvent = new EventEmitter<string>(false);
 
   login: any = {};
   searchText: string = '';
+
 
   constructor(private authService: AuthService) {
     this.login = this.authService.getLogin();

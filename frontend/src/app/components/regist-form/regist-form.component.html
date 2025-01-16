@@ -6,8 +6,6 @@
       <div class="control">
         <input formControlName="name" id="name" class="input" type="text" placeholder="Nombre" required>
       </div>
-    </div>
-    <div>
       <small *ngIf="name.invalid && (name.touched || name.dirty)">Nombre inválido</small>
     </div>
 
@@ -16,8 +14,6 @@
       <div class="control">
         <input formControlName="lastname" id="lastname" class="input" type="text" placeholder="Apellido" required>
       </div>
-    </div>
-    <div>
       <small *ngIf="lastname.invalid && (lastname.touched || lastname.dirty)">Apellido inválido</small>
     </div>
 
@@ -26,8 +22,6 @@
       <div class="control">
         <input formControlName="email" id="email" class="input" type="email" placeholder="Correo" required>
       </div>
-    </div>
-    <div>
       <small *ngIf="email.invalid && (email.touched || email.dirty)">Correo inválido</small>
     </div>
 
@@ -36,19 +30,15 @@
       <div class="control">
         <input formControlName="password" id="password" class="input" type="password" placeholder="Contraseña" required>
       </div>
-      <div>
-        <small *ngIf="password.invalid && (password.touched || password.dirty)">Contraseñas inválida</small>
-      </div>
+      <small *ngIf="password.invalid && (password.touched || password.dirty)">Contraseñas inválida</small>
     </div>
 
     <div class="field">
       <label class="label" for="confirmPassword">Confirmar Contraseña</label>
       <div class="control">
-        <input formControlName="confirmPassword" id="confirmPassword" class="input" type="password" placeholder="Confirme su contraseña"
-          required>
+        <input formControlName="confirmPassword" id="confirmPassword" class="input" type="password"
+          placeholder="Confirme su contraseña" required>
       </div>
-    </div>
-    <div>
       <small *ngIf="(confirmPassword.value != password.value || confirmPassword.invalid) && (confirmPassword.touched || confirmPassword.dirty)">
         Las contraseñas deben ser iguales
       </small>
