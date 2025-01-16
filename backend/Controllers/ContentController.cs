@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [Route("api/content")]
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     public class ContentController : ControllerBase
     {

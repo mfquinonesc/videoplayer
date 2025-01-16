@@ -29,7 +29,7 @@ namespace backend.Services
                 account.UserId = 0;
             }
             
-            return new { status = faccount == null, account };
+            return new { status = (faccount == null), account };
         }
 
         public dynamic Update(Account account)
@@ -40,6 +40,7 @@ namespace backend.Services
                 faccount.Password = account.Password;
                 faccount.Name = account.Name;
                 faccount.Lastname = account.Lastname;
+                this._context.Update(faccount);
                 this._context.SaveChanges();
             }           
             return new { status = faccount != null };

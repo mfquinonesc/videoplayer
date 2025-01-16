@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [Route("api/playlist")] 
-    [AllowAnonymous] 
+    [Authorize] 
     [ApiController]
     public class PlaylistController : ControllerBase
     {

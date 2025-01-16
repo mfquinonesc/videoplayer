@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [Route("api/schedule")]
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     public class ScheduleController : ControllerBase
     {

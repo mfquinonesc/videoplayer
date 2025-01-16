@@ -71,13 +71,12 @@ namespace backend.Services
         {
             double duration = dto.Duration ?? 0;
 
-            if (duration <= 0)
-                return false;    
+            bool status = (duration > 0); // true is valid;                  
 
             var playlist = _context.Playlists.Where(p => p.PlaylistId == dto.PlaylistId).FirstOrDefault();
             var content = _context.Contents.Where(c => c.ContentId == dto.ContentId).FirstOrDefault();
 
-            if (content != null && playlist != null)
+            if (content != null && playlist != null && status)
             {
                 List<Schedule> schedules = _context.Schedules.Where(s=> s.PlaylistId == dto.PlaylistId).ToList();
 
@@ -92,10 +91,10 @@ namespace backend.Services
                     found = (finalDateDto >= schedules[i].StartDate && finalDateDto <= finalDate) || (dto.StartDate >= schedules[i].StartDate && dto.StartDate <= finalDate);
                 }
 
-                return !found;
+                status = !found;
             }
 
-            return (content != null && playlist != null);
+            return status;
         }
     }
 

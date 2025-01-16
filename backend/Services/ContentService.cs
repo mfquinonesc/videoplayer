@@ -181,7 +181,7 @@ namespace backend.Services
 
                 dynamic data = new { };
 
-                if (content != null)
+                if (content != null && playlist != null)
                 {
                     data = new
                     {
@@ -189,7 +189,7 @@ namespace backend.Services
                         content.Title,                       
                         content.ContentTypeId,
                         content.Description,
-                        playlist.PlaylistId,
+                        playlist.PlaylistId,                        
                         list[i].ScheduleId,
                         list[i].Duration,
                         list[i].IsActive,

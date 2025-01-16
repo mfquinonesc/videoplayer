@@ -7,7 +7,7 @@ namespace backend.Controllers
 {
 
     [Route("api/contenttype")]
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     public class ContentTypeController : ControllerBase
     {

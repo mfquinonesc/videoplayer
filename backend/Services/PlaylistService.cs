@@ -3,6 +3,7 @@ using backend.Models;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace backend.Services
 {
@@ -56,13 +57,13 @@ namespace backend.Services
 
         public dynamic DeleteById(int id)
         {
-            var playlist = _context.Playlists.FirstOrDefault(p => p.PlaylistId == id);
-
+            var playlist = _context.Playlists.Where(p => p.PlaylistId == id).FirstOrDefault();
+            
             if (playlist != null)
-            {
+            {                
                 _context.Remove(playlist);
                 _context.SaveChanges();
-            }
+            }           
 
             return new { status = playlist != null };
         }
