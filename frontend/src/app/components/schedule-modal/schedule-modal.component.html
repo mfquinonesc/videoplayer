@@ -11,9 +11,10 @@
 
             <!-- Campo de Nombre -->
             <div *ngIf="isAdding" class="field">
-                <label class="label" for="name">Nombre</label>
+                <label [for]="utility.getId(0)" class="label" for="name">Nombre</label>
                 <div class="control">
-                    <input formControlName="name" class="input" type="text" placeholder="Nombre" id="name">
+                    <input [id]="utility.getId(0)" formControlName="name" class="input" type="text"
+                        placeholder="Nombre">
                 </div>
                 <div *ngIf="name.invalid && (name.dirty || name.touched)">
                     <small>Debe ingresar un nombre</small>
@@ -22,9 +23,9 @@
 
             <!-- Campo de Descripción -->
             <div *ngIf="isAdding" class="field" id="text-area-field">
-                <label for="extra-text" class="label">Descripción</label>
+                <label [for]="utility.getId(1)" class="label">Descripción</label>
                 <div class="control">
-                    <textarea formControlName="description" class="textarea" id="extra-text"
+                    <textarea [id]="utility.getId(1)" formControlName="description" class="textarea"
                         placeholder="Agrega la descripción aquí..."></textarea>
                 </div>
                 <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)">
@@ -34,9 +35,9 @@
 
             <!-- Campo de Fecha y Hora -->
             <div *ngIf="!isAdding" class="field">
-                <label for="startDate" class="label">Fecha y Hora</label>
+                <label [for]="utility.getId(2)" class="label">Fecha y Hora</label>
                 <div class="control">
-                    <input formControlName="startDate" class="input" type="datetime-local" id="startDate">
+                    <input [id]="utility.getId(2)" formControlName="startDate" class="input" type="datetime-local">
                 </div>
                 <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
                     <small>Debe seleccionar una fecha y hora</small>
@@ -44,10 +45,11 @@
             </div>
 
             <div *ngIf="!isAdding" class="field">
-                <label class="label" for="duration">Número de minutos</label>
+                <label [for]="utility.getId(3)" class="label" for="duration">Número de minutos</label>
                 <div class="control">
                     <input formControlName="duration" class="input" type="number" placeholder="Número de minutos"
-                        id="duration" min="0" [readOnly]="content.contentTypeId == 1 || content.contentTypeId == 2" />
+                        [id]="utility.getId(3)" min="0"
+                        [readOnly]="content.contentTypeId == 1 || content.contentTypeId == 2" />
                 </div>
                 <div *ngIf="duration.invalid && (duration.dirty || duration.touched)">
                     <small>Debe ingresar un número válido (minutos)</small>
@@ -57,10 +59,10 @@
 
             <!-- Campo de Selección de Lista -->
             <div *ngIf="!isAdding" class="field">
-                <label for="playlistId" class="label">Seleccionar Lista</label>
+                <label [for]="utility.getId(4)" class="label">Seleccionar lista</label>
                 <div class="control is-flex is-align-items-center">
                     <div class="select">
-                        <select formControlName="playlistId" id="playlistId">
+                        <select formControlName="playlistId" [id]="utility.getId(4)">
                             <option *ngFor="let list of playlists" [value]="list.playlistId">{{list.name}}</option>
                         </select>
                     </div>
@@ -77,7 +79,8 @@
                 <ul>
                     <li *ngFor="let schedule of scheduledTimes">
                         <span class="delete mr-2" (click)="delete(schedule.scheduleId)"></span>
-                        <span> {{ schedule.date | date: 'dd/MM/YYYY hh:mm:ss a'  }} - {{ schedule.listName +' - ('+ schedule.duration+')' }}</span>
+                        <span> {{ schedule.date | date: 'dd/MM/YYYY hh:mm:ss a' }} - {{ schedule.listName +' - ('+
+                            schedule.duration+')' }}</span>
                     </li>
                 </ul>
             </div>

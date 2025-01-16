@@ -4,6 +4,7 @@ import { Content } from 'src/app/models/content';
 import { ContentType } from 'src/app/models/content-type';
 import { ContentTypeService } from 'src/app/services/content-type.service';
 import { ContentService } from 'src/app/services/content.service';
+import { Utiliy } from 'src/app/utilities/utility';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class ContentModalComponent implements OnInit {
 
   imageFile: File | any = null;
   videoFile: File | any = null;
+
+  utiliy = new Utiliy();
 
   constructor(private fb: FormBuilder, private contentService: ContentService, private contentTypesService: ContentTypeService) {
     this.contentTypesService.types.subscribe({
@@ -94,6 +97,7 @@ export class ContentModalComponent implements OnInit {
     return value;
   }
 
+
   initialize() {
     let isUp = this.uContent.contentId && this.isUpdating;
 
@@ -104,6 +108,7 @@ export class ContentModalComponent implements OnInit {
     });
 
     this.resetFiles();
+    this.utiliy.generateIds('content_modal', 5);
   }
 
   cancel() {
@@ -130,30 +135,24 @@ export class ContentModalComponent implements OnInit {
     });
 
     this.imageFile = null;
-    this.videoFile = null;    
+    this.videoFile = null;
   }
 
-  loadFile(event: Event) {    
+  loadFile(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (input?.files?.length) {
 
       if (input.files[0].type.includes('image')) {
-        this.image.setValue(input.files[0].name);         
+        this.image.setValue(input.files[0].name);
         this.imageFile = input.files[0];
       }
 
       if (input.files[0].type.includes('video')) {
-        this.video.setValue(input.files[0].name);  
+        this.video.setValue(input.files[0].name);
         this.videoFile = input.files[0];   
-        console.log('video',this.video);
-                  
       }
-    }
-    else{
-      console.log('no carga');
-      
-    }
+    }   
   }
 
   create() {

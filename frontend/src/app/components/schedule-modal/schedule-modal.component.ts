@@ -6,6 +6,7 @@ import { Schedule } from 'src/app/models/schedule';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { Message } from 'src/app/utilities/message';
+import { Utiliy } from 'src/app/utilities/utility';
 
 @Component({
   selector: 'app-schedule-modal',
@@ -28,6 +29,7 @@ export class ScheduleModalComponent implements OnInit {
   isLoading: boolean = false;
 
   message: Message = new Message();
+  utility = new Utiliy();
 
   scheduleForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -72,6 +74,8 @@ export class ScheduleModalComponent implements OnInit {
         });
       },
     });
+
+    this.utility.generateIds('schedule_modal',5);
   }
 
   get name() {

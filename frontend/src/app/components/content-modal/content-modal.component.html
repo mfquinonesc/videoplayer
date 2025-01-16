@@ -8,28 +8,28 @@
         </header>
         <section class="modal-card-body">
             <div class="field">
-                <label class="label">Título</label>
+                <label [for]="utiliy.getId(0)" class="label">Título</label>
                 <div class="control">
-                    <input formControlName="title" class="input" type="text" placeholder="Título">
+                    <input [id]="utiliy.getId(0)" formControlName="title" class="input" type="text" placeholder="Título">
                 </div>
                 <div *ngIf="title.invalid && (title.dirty || title.touched)">
                     <small>Debe ingresar un título</small>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Descripción</label>
+                <label [for]="utiliy.getId(1)" class="label">Descripción</label>
                 <div class="control">
-                    <textarea formControlName="description" class="textarea" placeholder="Descripción"></textarea>
+                    <textarea [id]="utiliy.getId(1)" formControlName="description" class="textarea" placeholder="Descripción"></textarea>
                 </div>
                 <div *ngIf="description.invalid && (description.dirty || description.touched)">
                     <small>Debe ingresar una descripción</small>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Tipos de presentación</label>
+                <label [for]="utiliy.getId(2)" class="label">Tipos de presentación</label>
                 <div class="control">
                     <div class="select">
-                        <select formControlName="contentTypeId" (change)="resetFiles()">
+                        <select [id]="utiliy.getId(2)" formControlName="contentTypeId" (change)="resetFiles()">
                             <option *ngFor="let ct of cTypes" [ngValue]="ct.contentTypeId">{{ct.name}}</option>                           
                         </select>
                     </div>
@@ -37,14 +37,14 @@
             </div>
             <div *ngIf="contentTypeId.value == 3 || contentTypeId.value == 2" class="field has-addons">
                 <p class="control">
-                    <label for="imageFile" class="button is-warning">
+                    <label [for]="utiliy.getId(3)" class="button is-warning">
                         <span class="icon"><i class="fa-solid fa-image"></i></span>
                         <span>Imagen</span>
                     </label>                    
                 </p>
                 <p class="control is-expanded">
                     <input formControlName="image" class="input" type="text" placeholder="Imagen" readonly>
-                    <input id="imageFile" class="input" type="file" accept="image/*" style="display: none;" (change)="loadFile($event)" [disabled]="isLoading">
+                    <input [id]="utiliy.getId(3)" class="input" type="file" accept="image/*" style="display: none;" (change)="loadFile($event)" [disabled]="isLoading">
                     <span *ngIf="imageInvalid && (image.dirty || image.touched)">
                         <small>Debe cargar una imagen</small>
                     </span>
@@ -53,14 +53,14 @@
             
             <div *ngIf="contentTypeId.value == 1 || contentTypeId.value == 2" class="field has-addons">
                 <p class="control">
-                    <label for="videoFile" class="button is-warning">
+                    <label [for]="utiliy.getId(4)" class="button is-warning">
                         <span class="icon"><i class="fa-solid fa-film"></i></span>
                         <span>Video</span>
                     </label>
                 </p>
                 <p class="control is-expanded">
                     <input formControlName="video" class="input" type="text" placeholder="Video" readonly>
-                    <input id="videoFile" class="input" type="file" accept="video/*" style="display: none;" (change)="loadFile($event)" [disabled]="isLoading">
+                    <input [id]="utiliy.getId(4)" class="input" type="file" accept="video/*" style="display: none;" (change)="loadFile($event)" [disabled]="isLoading">
                     <span *ngIf="videoInvalid && (video.dirty || video.touched)">
                         <small>Debe cargar un video</small>
                     </span>
