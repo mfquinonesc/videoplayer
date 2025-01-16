@@ -1,64 +1,52 @@
-<section class="section mt-5">
-  <div class="container">
+<!-- Main content container -->
+<section class="hero is-light is-fullheight is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
 
-    <app-profile *ngIf="isInfo"></app-profile>
+      <article class="panel is-warning">
+        <p class="panel-heading">Warning</p>
+        <p class="panel-tabs">
+          <a class="is-active">All</a>
+          <a>Public</a>
+          <a>Private</a>
+          <a>Sources</a>
+          <a>Forks</a>
+        </p>
+        <div class="panel-block">
+          <p class="control has-icons-left">
+            <input class="input is-warning" type="text" placeholder="Search" />
+            <span class="icon is-left">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+          </p>
+        </div>
+        <a class="panel-block is-active">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          bulma
+        </a>
+        <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          marksheet
+        </a>
+        <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          minireset.css
+        </a>
+        <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          jgthms.github.io
+        </a>
+      </article>
 
-    <hr *ngIf="isInfo">
 
-    <div *ngIf="isInfo" class="field">
-      <div class="control">
-        <button class="button is-warning" type="button" (click)="toggle()">
-          <span class="icon"> <i class="fa-solid fa-play"></i> </span>
-          <span> Principal </span>
-        </button>
-      </div>
     </div>
-
-    <h3 class="title is-5 has-text-weight-semibold">{{cSchedule.title}}</h3>
-    <div class="columns is-multiline" style="margin-bottom: 10vh;">
-
-      <div *ngIf="isBanner" class="column">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image">
-              <img [src]="cSchedule.imageUrl" alt="Image">
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="content">
-
-              <p>{{cSchedule.description}}</p>
-             
-            </div>
-          </div>
-        </div>
-        <div *ngIf="!isInfo" class="field">
-          <div class="control">
-            <button class="button" type="button" (click)="toggle()">
-              <!-- <span class="icon"> <i class="fa-solid fa-play"></i> </span> -->
-              <span> Inicio </span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="isPlayer" class="column is-four-fifths">
-
-        <div *ngIf="!isVideo" class="image-container">
-          <figure class="image">
-            <img [src]="cSchedule.imageUrl" alt="Image">
-          </figure>
-        </div>
-
-        <div *ngIf="isVideo" class="video-container">
-          <video class="video-player" controls>
-            <source [src]="cSchedule.videoUrl" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-      </div>
-    </div>
-
   </div>
 </section>

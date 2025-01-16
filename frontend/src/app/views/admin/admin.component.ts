@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Content } from 'src/app/models/content';
 import { ContentType } from 'src/app/models/content-type';
 import { Playlist } from 'src/app/models/playlist';
@@ -17,9 +17,11 @@ export class AdminComponent {
 
   types: ContentType[] = [];
   contents: Content[] = [];
+  contentCopies: Content[] = [];
   playlists: Playlist[] = [];
 
   isEditing: boolean = false;
+  isFound:boolean = false;
 
   constructor(private contentService: ContentService,
     private contentTypeService: ContentTypeService,
@@ -40,6 +42,7 @@ export class AdminComponent {
             c.videoUrl = this.contentService.getUrl(c.videoUrl);
           }
         });
+        this.contentCopies = this.contents;
       },
     });
 
@@ -73,4 +76,14 @@ export class AdminComponent {
     this.isEditing = false;
   }
 
+  search(text: string) {
+    if (text.trim()) {
+      this.contents = this.contentCopies.filter(c => {
+        return (c.description?.includes(text.trim()) || c.title.includes(text.trim()));
+      });      
+    } else {
+      this.contents = this.contentCopies;
+    }
+    this.isFound = this.contents.length == 0;
+  }
 }

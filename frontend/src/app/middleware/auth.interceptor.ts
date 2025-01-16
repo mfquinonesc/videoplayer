@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     clone = request.clone({
       setHeaders: {
-        Authorization: this.authService.getToken() ? `${this.authService.getToken()}` : 'Not Found'
+        Authorization: this.authService.getToken() ? `Bearer ${this.authService.getToken()}` : 'Not Found'
       }
     });
 

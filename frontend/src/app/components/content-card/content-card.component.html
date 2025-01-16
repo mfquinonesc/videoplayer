@@ -1,32 +1,37 @@
 <div class="card">
+  <header class="card-header" (click)="toggle()">
+    <p class="card-header-title">{{content.title}}</p>
+  </header>
   <div class="card-image">
-    <figure class="image">
+    <figure class="image is-3by2 is-flex is-flex-direction-column is-justify-content-center">
       <img *ngIf="content.imageUrl && !content.videoUrl" alt="Image" [src]="content.imageUrl">
 
-      <video *ngIf="content.videoUrl" controls loop muted >
-        <source [src]="content.videoUrl">        
+      <video *ngIf="content.videoUrl" controls loop muted>
+        <source [src]="content.videoUrl">
         Your browser does not support the video tag.
       </video>
     </figure>
   </div>
-  <div class="card-content">
-    <p class="title is-6 has-text-weight-semibold">{{content.title}}</p>
-    <p class="subtitle is-7 has-text-weight-semibold">{{content.description }}</p>
-
-    <div class="buttons">
-      <button class="button is-black" type="button" [disabled]="isLoading" (click)="toggleSchedule()">
-        <span class="icon"><i class="fa-solid fa-clock"></i></span>
-      </button>
-      <button class="button is-black" type="button" [disabled]="isLoading" (click)="toggle()">
-        <span class="icon"><i class="fa-solid fa-pen"></i></span>
-      </button>
-      <button class="button is-black" type="button" [disabled]="isLoading" (click)="delete()">
-        <span class="icon"><i class="fa-solid fa-trash"></i></span>
-      </button>
+  <!-- <div class="card-content">
+    <div class="content">
+      <p> {{ content.description }} </p>
     </div>
-  </div>
+  </div> -->
+  <footer class="card-footer">
+    <a class="card-footer-item has-text-black" (click)="toggleSchedule()">
+      <span class="icon"><i class="fa-solid fa-clock"></i></span>
+    </a>
+    <a class="card-footer-item has-text-black" (click)="toggle()">
+      <span class="icon"><i class="fa-solid fa-pen"></i></span>
+    </a>
+    <a class="card-footer-item has-text-black" (click)="delete()">
+      <span class="icon"><i class="fa-solid fa-trash"></i></span>
+    </a>
+  </footer>
 </div>
 
-<app-content-modal [isUpdating]="true" [uContent]="content" [isActive]="isEditing" (closeEvent)="toggle()" (saveEvent)="update()"></app-content-modal>
+<app-content-modal [isUpdating]="true" [uContent]="content" [isActive]="isEditing" (closeEvent)="toggle()"
+  (saveEvent)="update()"></app-content-modal>
 
-<app-schedule-modal [playlists]="playlists" [content]="content" [isActive]="isDating" (cancelEvent)="toggleSchedule()" (saveEvent)="update()"></app-schedule-modal>
+<app-schedule-modal [playlists]="playlists" [content]="content" [isActive]="isDating" (cancelEvent)="toggleSchedule()"
+  (saveEvent)="update()"></app-schedule-modal>
