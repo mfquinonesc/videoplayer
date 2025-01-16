@@ -21,7 +21,7 @@ export class AdminComponent {
   playlists: Playlist[] = [];
 
   isEditing: boolean = false;
-  isFound:boolean = false;
+  isFound: boolean = false;
 
   constructor(private contentService: ContentService,
     private contentTypeService: ContentTypeService,
@@ -79,8 +79,9 @@ export class AdminComponent {
   search(text: string) {
     if (text.trim()) {
       this.contents = this.contentCopies.filter(c => {
-        return (c.description?.includes(text.trim()) || c.title.includes(text.trim()));
-      });      
+        return (c.description?.toLowerCase().includes(text.trim().toLowerCase()) ||
+         c.title.toLowerCase().includes(text.trim().toLowerCase()));
+      });
     } else {
       this.contents = this.contentCopies;
     }
