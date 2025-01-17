@@ -14,6 +14,7 @@ namespace backend.Dtos
         public DateTime CreatedAt { get; set; }
         public IFormFile? ImageFile { get; set; }
         public IFormFile? VideoFile { get; set; }
+        public int? SortIndex { get; set; }
 
         public static Content Convert (ContentDto dto)
         {
@@ -26,7 +27,8 @@ namespace backend.Dtos
                 Description = dto.Description,
                 Duration = dto.Duration,
                 ContentTypeId = dto.ContentTypeId,
-                CreatedAt = dto.CreatedAt
+                CreatedAt = dto.CreatedAt,
+                SortIndex = dto.SortIndex
             };
             return cont;
         }

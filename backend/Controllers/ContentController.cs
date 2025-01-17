@@ -1,8 +1,6 @@
 ﻿using backend.Dtos;
-using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -41,7 +39,7 @@ namespace backend.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public dynamic Update(int id,[FromForm] ContentDto content)
+        public dynamic Update(int id, [FromForm] ContentDto content)
         {
             return this._service.UpdateById(id, content);
         }
@@ -51,6 +49,13 @@ namespace backend.Controllers
         public dynamic Delete(int id)
         {
             return this._service.DeleteById(id);
+        }
+
+        [HttpGet]
+        [Route("sort")]
+        public dynamic SortContents([FromQuery] string arr)
+        {
+            return this._service.SortContents(arr);
         }
     }
 }

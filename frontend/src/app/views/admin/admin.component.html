@@ -4,14 +4,14 @@
 
       <app-profile (clickEvent)="toggle()" (searchEvent)="search($event)"></app-profile>
 
-      <div class="columns is-multiline">
+      <div class="columns is-multiline" cdkDropList (cdkDropListDropped)="drop($event)">
 
         <div *ngIf="isFound" class="column is-6">
           <div class="box">No se encontró ningun resultado...</div>
         </div>
-        <div *ngFor="let content of contents" class="column is-3">
+        <div class="column is-3" *ngFor="let content of contents">
           <app-content-card [playlists]="playlists" [content]="content" (deleteEvent)="update()"
-            (updateEvent)="update()"></app-content-card>
+            (updateEvent)="update()" cdkDrag></app-content-card>
         </div>
 
       </div>

@@ -11,7 +11,7 @@ namespace backend.Services
     {
         private readonly AuthSecurity _auth;
 
-        public AccountService(DBVideoplayerContext context,AuthSecurity auth) : base(context) 
+        public AccountService(DBVideoplayerContext context, AuthSecurity auth) : base(context)
         {
             this._auth = auth;
         }
@@ -20,16 +20,33 @@ namespace backend.Services
         {
             var faccount = this._context.Accounts.Where(a => a.Email == account.Email).FirstOrDefault();
 
-            if(faccount == null)
-            {                
+            if (faccount == null)
+            {
+                account.CreatedAt = null;
                 account.Password = this._auth.EncriptSHA256(account.Password);
                 this._context.Accounts.Add(account);
                 this._context.SaveChanges();
-                account.Password = "";
-                account.UserId = 0;
+
+                return new
+                {
+                    status = true,
+                    message = $"Se ha creado su cuenta exitosamente. Ingrese con su correo {account.Email} y contraseña",
+                    account = new 
+                    { 
+                        account.Email                        
+                    },                    
+                };
             }
-            
-            return new { status = (faccount == null), account };
+
+            return new
+            {
+                status = false,                
+                message = $"El correo {account.Email} ya está registrado",
+                account = new
+                {
+                   account.Email
+                },
+            };
         }
 
         public dynamic Update(Account account)
@@ -42,23 +59,36 @@ namespace backend.Services
                 faccount.Lastname = account.Lastname;
                 this._context.Update(faccount);
                 this._context.SaveChanges();
-            }           
+            }
             return new { status = faccount != null };
         }
 
         public dynamic Login(LoginDto dto)
         {
-            var account = this._context.Accounts.Where(a => a.Email == dto.Email && a.Password == this._auth.EncriptSHA256(dto.Password)).FirstOrDefault();
-            var res = new {
-                status = account != null,
-                token = account != null ? this._auth.GenerateJwt(account) : "", 
-                name = account != null ? account.Name : "",  
-                isAdmin = account.IsAdmin,
-                email = account.Email                         
-            };
-            return res;
+            var account = this._context.Accounts.Where(a => a.Email == dto.Email).FirstOrDefault();
+
+            if (account == null)
+            {
+                return new { status = false, message = $"El correo {dto.Email} no está registrado" };
+            }
+            else
+            {
+                if (account.Password == this._auth.EncriptSHA256(dto.Password))
+                {
+                    return new
+                    {
+                        status = true,
+                        token = this._auth.GenerateJwt(account),
+                        name = account.Name,
+                        isAdmin = account.IsAdmin,
+                        email = account.Email
+                    };
+                }
+            }
+
+            return new { status = false, message = $"El correo o la contraseña son incorrectos" };
         }
-       
+
         public dynamic Verify(string authorizationHeader)
         {
             if (string.IsNullOrEmpty(authorizationHeader))
@@ -66,11 +96,11 @@ namespace backend.Services
                 return new { message = "Token nulo", status = false };
             }
 
-            var token = authorizationHeader.Replace("Bearer ", string.Empty); 
+            var token = authorizationHeader.Replace("Bearer ", string.Empty);
 
             try
             {
-                var principal = _auth.VerifyToken(token); 
+                var principal = _auth.VerifyToken(token);
                 return new { message = "Token válido", status = true };
             }
             catch (UnauthorizedAccessException ex)

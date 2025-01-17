@@ -19,6 +19,7 @@ namespace backend.Services
 
             if (pl == null)
             {
+                playlist.CreatedAt = null;
                 _context.Add(playlist);
                 _context.SaveChanges();
             }

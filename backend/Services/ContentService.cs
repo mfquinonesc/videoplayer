@@ -6,6 +6,7 @@ using backend.Models;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Reflection;
 using System.Net.Mime;
+using Microsoft.VisualBasic;
 
 namespace backend.Services
 {
@@ -25,7 +26,12 @@ namespace backend.Services
             Content content = ContentDto.Convert(dto);
 
             this.CreateFiles(dto, ref content);
+            content.CreatedAt = null;
             _context.Add(content);
+            _context.SaveChanges();
+
+            content.SortIndex = content.ContentId;
+            _context.Update(content);
             _context.SaveChanges();
 
             content.ImageUrl = this.GetName(content.ImageUrl);
@@ -33,11 +39,9 @@ namespace backend.Services
 
             return new { status = true, content };
         }
-
-
         public dynamic GetAll()
         {
-            var contents = this._context.Contents.ToList();
+            var contents = this._context.Contents.OrderBy(c => c.SortIndex).ToList();
 
             if (contents.Count > 0)
             {
@@ -92,6 +96,14 @@ namespace backend.Services
 
             if (content != null)
             {
+                List<Schedule> schedules = this._context.Schedules.Where(s => s.ContentId == content.ContentId).ToList();
+
+                for (int i = 0; i < schedules.Count; i++)
+                {
+                    _context.Remove(schedules[i]);
+                    _context.SaveChanges();
+                }
+
                 this._context.Remove(content);
                 this._context.SaveChanges();
             }
@@ -132,7 +144,7 @@ namespace backend.Services
 
         private string GetName(string url)
         {
-            return (url != null) ? Path.GetFileName(new Uri(url).LocalPath) : "";
+            return !String.IsNullOrEmpty(url) ? Path.GetFileName(new Uri(url).LocalPath) : "";
         }
 
         private int GetVideoDuration(string filePath)
@@ -153,17 +165,24 @@ namespace backend.Services
 
             if (dto.VideoFile != null && (dto.ContentTypeId == 1 || dto.ContentTypeId == 2))
             {
-                string path = this.SaveFile(dto.VideoFile);
-                int duration = GetVideoDuration(path);
-                content.Duration = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(duration) / 60));
-                content.VideoUrl = path;
+                content.VideoUrl = this.SaveFile(dto.VideoFile);
+                content.Duration = GetVideoDuration(content.VideoUrl);
             }
 
             if (dto.ImageFile != null && (dto.ContentTypeId == 3 || dto.ContentTypeId == 2))
             {
-                string path = this.SaveFile(dto.ImageFile);
-                content.ImageUrl = path;
+                content.ImageUrl = this.SaveFile(dto.ImageFile);
                 content.Duration = (dto.Duration != null && dto.ContentTypeId == 3) ? dto.Duration : 0;
+            }
+
+            if (dto.ContentTypeId == 3)
+            {
+                content.VideoUrl = "";
+            }
+
+            if (dto.ContentTypeId == 1)
+            {
+                content.ImageUrl = "";
             }
         }
 
@@ -186,10 +205,11 @@ namespace backend.Services
                     data = new
                     {
                         content.ContentId,
-                        content.Title,                       
+                        content.Title,
                         content.ContentTypeId,
                         content.Description,
-                        playlist.PlaylistId,                        
+                        content.SortIndex,
+                        playlist.PlaylistId,
                         list[i].ScheduleId,
                         list[i].Duration,
                         list[i].IsActive,
@@ -197,7 +217,7 @@ namespace backend.Services
                         FinalDate = list[i].StartDate.AddMinutes(Convert.ToDouble(list[i].Duration)),
                         ImageUrl = content.ImageUrl != null ? this.GetName(content.ImageUrl) : "",
                         VideoUrl = content.VideoUrl != null ? this.GetName(content.VideoUrl) : "",
-                    
+
                     };
                 }
 
@@ -205,6 +225,38 @@ namespace backend.Services
             }
 
             return new { playlist, contents = resp };
+        }
+
+        public dynamic SortContents(string arr)
+        {
+            if (!String.IsNullOrEmpty(arr))
+            {                
+                List<string> indexes = arr.Split('-').ToList();
+                List<Content> list = _context.Contents.OrderBy(c => c.SortIndex).ToList();
+                List<int> sortIds = new List<int>();
+
+                for (int i = 0; i < indexes.Count; i++)
+                {
+                    int index;
+
+                    if (int.TryParse(indexes[i], out index))
+                    {
+                        sortIds.Add(index);
+                    }
+                }
+
+                if (indexes.Count == sortIds.Count)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        list[i].SortIndex = sortIds[i];
+                        this._context.Update(list[i]);
+                        this._context.SaveChanges();
+                    }
+                }
+            }
+
+            return this.GetAll();
         }
     }
 }

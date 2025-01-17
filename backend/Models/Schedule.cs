@@ -11,6 +11,6 @@ namespace backend.Models
         public DateTime StartDate { get; set; }
         public bool IsActive { get; set; }
         public int? Duration { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

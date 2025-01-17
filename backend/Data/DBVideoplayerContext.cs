@@ -27,17 +27,18 @@ namespace backend.Data
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__Account__CB9A1CFF296D0207");
+                    .HasName("PK__Account__CB9A1CFFD90B7467");
 
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Email, "UQ__Account__AB6E6164AB8F607B")
+                entity.HasIndex(e => e.Email, "UQ__Account__AB6E61644847D7CE")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
+                    .HasColumnName("createdAt")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Email)
@@ -88,6 +89,8 @@ namespace backend.Data
                     .IsUnicode(false)
                     .HasColumnName("imageUrl");
 
+                entity.Property(e => e.SortIndex).HasColumnName("sortIndex");
+
                 entity.Property(e => e.Title)
                     .HasMaxLength(255)
                     .IsUnicode(false)
@@ -124,6 +127,7 @@ namespace backend.Data
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
+                    .HasColumnName("createdAt")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Description)

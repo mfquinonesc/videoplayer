@@ -19,6 +19,8 @@ import { ScheduleModalComponent } from './components/schedule-modal/schedule-mod
 import { AuthInterceptor } from './middleware/auth.interceptor';
 import { ErrorComponent } from './views/error/error.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

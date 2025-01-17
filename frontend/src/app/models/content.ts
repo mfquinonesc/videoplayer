@@ -9,6 +9,7 @@ export class Content {
     createdAt?:Date;
     imageFile?: File | any;
     videoFile?: File | any;
+    sortIndex?:number;
 
     get formData(): FormData {
         const formData = new FormData();    
@@ -37,6 +38,10 @@ export class Content {
        
         if (this.createdAt) {
           formData.append("createdAt", this.createdAt.toISOString());
+        }
+
+        if (this.sortIndex) {
+          formData.append("sortIndex", this.sortIndex.toString());
         }
     
         return formData;

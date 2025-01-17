@@ -15,6 +15,7 @@ namespace backend.Services
 
             if (status)
             {
+                schedule.CreatedAt = null;
                 schedule.IsActive = true;
                 _context.Add(schedule);
                 _context.SaveChanges();

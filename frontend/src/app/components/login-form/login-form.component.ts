@@ -42,7 +42,7 @@ export class LoginFormComponent extends Message {
             this.authService.saveLogin(value);
             this.router.navigateByUrl('/admin');
           }else{
-            this.showMessage('El correo o la contraseña son incorrectos','Error');
+            this.showMessage(value.message,'Error');
           }
         },
         complete:()=> {

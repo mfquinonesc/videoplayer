@@ -136,6 +136,8 @@ export class ContentModalComponent implements OnInit {
 
     this.imageFile = null;
     this.videoFile = null;
+
+    this.utiliy.updateIds();
   }
 
   loadFile(event: Event) {

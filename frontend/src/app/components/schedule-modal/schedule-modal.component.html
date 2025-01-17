@@ -45,14 +45,14 @@
             </div>
 
             <div *ngIf="!isAdding" class="field">
-                <label [for]="utility.getId(3)" class="label" for="duration">Número de minutos</label>
+                <label [for]="utility.getId(3)" class="label" for="duration">Número de segundos</label>
                 <div class="control">
-                    <input formControlName="duration" class="input" type="number" placeholder="Número de minutos"
+                    <input formControlName="duration" class="input" type="number" placeholder="Número de segundos"
                         [id]="utility.getId(3)" min="0"
                         [readOnly]="content.contentTypeId == 1 || content.contentTypeId == 2" />
                 </div>
                 <div *ngIf="duration.invalid && (duration.dirty || duration.touched)">
-                    <small>Debe ingresar un número válido (minutos)</small>
+                    <small>Debe ingresar un número válido (segundos)</small>
                 </div>
             </div>
 

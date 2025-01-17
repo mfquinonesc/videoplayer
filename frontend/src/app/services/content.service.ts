@@ -40,4 +40,12 @@ export class ContentService {
   getPlaylist(id: number): Observable<any> {
     return this.http.get(`${environment.API_PATH}/media/list/${id}`);
   }
+
+  sortList(arr: string): Observable<any> {
+    return this.http.get(`${this.path}/sort`, {
+      params: {  
+        arr: arr     
+      }
+    });
+  }
 }

@@ -1,6 +1,8 @@
 export class Utiliy {
 
     private _inputIds: string[] = [];
+    private _count = 1;
+    private _name = 'name';
 
     generateGUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -10,15 +12,21 @@ export class Utiliy {
         });
     }
 
-    generateIds(name: string, n: number) {
+    generateIds(name: string, count: number) {
+        this._count = count;
+        this._name = name;
         this._inputIds = [];
 
-        for (let i = 0; i < n; i++) {
-            this._inputIds.push(`${name}_${this.generateGUID().replace('ng', '').slice(0, 10)}`);
+        for (let i = 0; i < this._count; i++) {
+            this._inputIds.push(`${this._name}_${this.generateGUID().replace('ng', '').slice(0, 10)}`);
         }
     }
 
-    getId(index:number){
+    getId(index: number) {
         return this._inputIds[index];
+    }
+
+    updateIds() {
+        this.generateIds(this._name, this._count);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Content } from 'src/app/models/content';
 import { ContentType } from 'src/app/models/content-type';
 import { Playlist } from 'src/app/models/playlist';
@@ -7,6 +7,7 @@ import { ContentTypeService } from 'src/app/services/content-type.service';
 import { ContentService } from 'src/app/services/content.service';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-admin',
@@ -34,14 +35,7 @@ export class AdminComponent {
     this.contentService.getAll().subscribe({
       next: (value) => {
         this.contents = value.contents as Content[];
-        this.contents.forEach(c => {
-          if (c.imageUrl) {
-            c.imageUrl = this.contentService.getUrl(c.imageUrl);
-          }
-          if (c.videoUrl) {
-            c.videoUrl = this.contentService.getUrl(c.videoUrl);
-          }
-        });
+        this.setUrls();
         this.contentCopies = this.contents;
       },
     });
@@ -80,11 +74,40 @@ export class AdminComponent {
     if (text.trim()) {
       this.contents = this.contentCopies.filter(c => {
         return (c.description?.toLowerCase().includes(text.trim().toLowerCase()) ||
-         c.title.toLowerCase().includes(text.trim().toLowerCase()));
+          c.title.toLowerCase().includes(text.trim().toLowerCase()));
       });
     } else {
       this.contents = this.contentCopies;
     }
     this.isFound = this.contents.length == 0;
+  }
+
+  setUrls() {
+    this.contents.forEach(c => {
+      if (c.imageUrl) {
+        c.imageUrl = this.contentService.getUrl(c.imageUrl);
+      }
+      if (c.videoUrl) {
+        c.videoUrl = this.contentService.getUrl(c.videoUrl);
+      }
+    });
+  }
+
+  drop(event: CdkDragDrop<Content[]>) {
+   
+    if (event.previousIndex != event.currentIndex) {
+
+      const content = this.contents[event.previousIndex];
+      this.contents.splice(event.previousIndex, 1);
+      this.contents.splice(event.currentIndex, 0, content);
+
+      let arr: number[] = [];
+      this.contents.forEach(c => {
+        arr.push(c.sortIndex!);
+      });
+
+      const param: string = arr.join('-');
+      this.contentService.sortList(param).subscribe({ });
+    }
   }
 }
