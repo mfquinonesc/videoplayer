@@ -2,17 +2,41 @@
   <div class="hero-body is-flex is-flex-direction-column is-justify-content-flex-start">
     <div class="container mt-4">
 
-      <app-profile></app-profile>
+      <app-profile (searchEvent)="search($event)"></app-profile>
 
       <article class="panel is-warning">
-        <p class="panel-heading">Warning</p>
+        <p class="panel-heading">Listas de reproducción</p>
+        <div class="panel-block">
 
-        <a class="panel-block is-active">
-          <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-          </span>
-          bulma
-        </a>
+          <div class="menu" style="width: 100% !important;">
+
+            <ul *ngIf="listInfos.length==0" class="menu-list">
+              <li class="has-text-weight-semibold"> No se encontró ningún resultado... </li>
+            </ul>
+
+            <ul *ngFor="let info of listInfos" class="menu-list">
+
+              <li class="has-text-weight-semibold">
+
+                <a [ngClass]="info.funct?.isShown?'has-background-warning':''" (click)="info.funct?.toggle()">
+                  <span class="icon">
+                    <i class="fa-solid fa-list"></i>
+                  </span>
+                  {{info.playlist.name}}
+                </a>
+
+                <ul *ngIf="info.funct?.isShown">
+                  <li *ngFor="let s of info.schedules">
+                    <a>{{s.content?.title}} - {{s.schedule.startDate | date: 'dd/MM/YYYY hh:mm:ss a'}}</a>
+                  </li>
+                </ul>
+
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
       </article>
 
     </div>

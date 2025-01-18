@@ -217,7 +217,6 @@ namespace backend.Services
                         FinalDate = list[i].StartDate.AddMinutes(Convert.ToDouble(list[i].Duration)),
                         ImageUrl = content.ImageUrl != null ? this.GetName(content.ImageUrl) : "",
                         VideoUrl = content.VideoUrl != null ? this.GetName(content.VideoUrl) : "",
-
                     };
                 }
 

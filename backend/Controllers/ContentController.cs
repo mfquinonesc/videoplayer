@@ -17,7 +17,6 @@ namespace backend.Controllers
             this._service = service;
         }
 
-
         [HttpPost]
         public dynamic Create([FromForm] ContentDto content)
         {
@@ -57,5 +56,13 @@ namespace backend.Controllers
         {
             return this._service.SortContents(arr);
         }
+
+        [HttpGet]
+        [Route("list")]
+        public dynamic GetPlaylist([FromQuery] int id)
+        {
+            return this._service.GetPlaylist(id);
+        }
+
     }
 }

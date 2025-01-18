@@ -26,15 +26,6 @@ namespace backend.Controllers
                 return File(file.bytes,file.mimeType);
             }
             return NotFound();
-        }
-
-        [HttpGet]
-        [Route("list/{id}")]
-        public dynamic GetPlaylist(int id)
-        {
-            return this._service.GetPlaylist(id);
-            
-        }
-
+        }       
     }
 }

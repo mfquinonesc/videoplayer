@@ -5,11 +5,5 @@ export interface Schedule {
     startDate: Date;
     isActive: boolean;
     createdAt: Date;
-    duration: number;
-    contentTypeId: number;
-    description: string;
-    finalDate: string;
-    imageUrl: string;
-    title: string;
-    videoUrl: string;
+    duration: number;    
 }

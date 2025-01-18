@@ -37,15 +37,15 @@ export class ContentService {
     return this.http.put(`${this.path}/${id}`, content.formData);
   }
 
-  getPlaylist(id: number): Observable<any> {
-    return this.http.get(`${environment.API_PATH}/media/list/${id}`);
+  getList(id: number): Observable<any> {
+    return this.http.get(`${this.path}/list`, {
+      params: { id: id }
+    });
   }
 
   sortList(arr: string): Observable<any> {
     return this.http.get(`${this.path}/sort`, {
-      params: {  
-        arr: arr     
-      }
+      params: { arr: arr }
     });
   }
 }
